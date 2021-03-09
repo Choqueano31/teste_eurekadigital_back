@@ -24,8 +24,7 @@ const server = async () => {
       },
       () => console.log("mongoose is connected")
     );
-    var porta = process.env.PORT || 8080;
-    app.listen({ porta }, () => {
+    app.listen({ port: 4001 }, () => {
       console.log("connected");
     });
   } catch (err) {
