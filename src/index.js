@@ -3,17 +3,21 @@ import mongoose from "mongoose";
 import { ApolloServer, gql } from "apollo-server-express";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs";
+const dotenv = require("dotenv");
 
+dotenv.config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
+
+console.log(process.env.NODE_ENV);
 const server = async () => {
   const app = express();
   const server = new ApolloServer({ typeDefs, resolvers });
 
   server.applyMiddleware({ app });
   try {
-    const uri =
-      "mongodb+srv://Rafael:Teste123@cluster0.ps000.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
     await mongoose.connect(
-      uri,
+      process.env.NODE_ENV,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
